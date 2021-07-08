@@ -9,7 +9,7 @@ def joblist(request):
     context = {'job_list': job_list}
 
     for job in job_list:
-        job.city = Job.Cities[job.city]
-        job.type = Job.Types[job.type]
+        job.city = Job.Cities[job.city][1]
+        job.type = Job.Types[job.type][1]
 
     return HttpResponse(template.render(context))
