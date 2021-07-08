@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
 
-# Create your views here.
+from jobs.models import Job
+
+def joblist(request):
+    job_list = Job.objects.order_by('type')
+    template = loader.get_template('joblist.html')
+    context = {'job_list': job_list}
+
+    for job in job_list:
+        job.city = Job.Cities[job.city]
+        job.type = Job.Types[job.type]
+
+    return HttpResponse(template.render(context))
